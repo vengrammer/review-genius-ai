@@ -1,11 +1,12 @@
 import Navbar from "../components/navbar";
-import { Button } from "@/components/ui/button";
-import ComfirmationModal from "@/components/confirmationModal";
+import { Outlet } from "react-router-dom";
 function HomeLayout() {
     return (
-        <div>
+        <div className="max-h-full ">
             <Navbar/>
-            <ComfirmationModal buttonName="hey girl"/>
+            <div>
+                <Outlet/>
+            </div>
         </div>
     );
 }

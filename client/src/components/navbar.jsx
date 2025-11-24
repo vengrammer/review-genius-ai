@@ -1,24 +1,27 @@
-//import Logo from "../assets/react.svg"
-import { Button } from "@/components/ui/button"
+import { BookOpenText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
+  { href: "/", label: "Home", active: true },
+  { href: "/history", label: "History" },
   { href: "#", label: "Pricing" },
   { href: "#", label: "About" },
-]
+];
 
 function Navbar() {
   return (
@@ -29,7 +32,11 @@ function Navbar() {
           {/* Mobile menu trigger */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button className="group size-8 md:hidden" variant="ghost" size="icon">
+              <Button
+                className="group size-8 md:hidden"
+                variant="ghost"
+                size="icon"
+              >
                 <svg
                   className="pointer-events-none"
                   width={16}
@@ -40,16 +47,20 @@ function Navbar() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  xmlns="http://www.w3.org/2000/svg">
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315" />
+                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315"
+                  />
                   <path
                     d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45" />
+                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+                  />
                   <path
                     d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135" />
+                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
+                  />
                 </svg>
               </Button>
             </PopoverTrigger>
@@ -58,8 +69,10 @@ function Navbar() {
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink href={link.href} className="py-1.5" active={link.active}>
-                        {link.label}
+                      <NavigationMenuLink className="py-1.5">
+                        <Link to={link.href} active={link.active}>
+                          {link.label}
+                        </Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -69,9 +82,9 @@ function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-           {/* <a href="#" className="text-primary hover:text-primary/90">
-              <Logo />
-            </a>}
+            <a href="#" className="text-primary hover:text-primary/90">
+              <BookOpenText />
+            </a>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
@@ -80,7 +93,8 @@ function Navbar() {
                     <NavigationMenuLink
                       active={link.active}
                       href={link.href}
-                      className="py-1.5 font-medium text-muted-foreground hover:text-primary">
+                      className="py-1.5 font-medium text-muted-foreground hover:text-primary"
+                    >
                       {link.label}
                     </NavigationMenuLink>
                   </NavigationMenuItem>
@@ -90,13 +104,19 @@ function Navbar() {
           </div>
         </div>
         {/* Right side */}
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
+        <div className="flex items-center gap-2 pr-8 lg:pr-20">
+          {/*<Button asChild variant="ghost" size="sm" className="text-sm">
             <a href="#">Sign In</a>
           </Button>
           <Button asChild size="sm" className="text-sm">
             <a href="#">Get Started</a>
-          </Button>
+          </Button>*/}
+          <img
+            className="max-w-8 max-h-8 rounded-4xl"
+            src="https://api.dicebear.com/9.x/initials/svg?seed=Gerona Reven"
+            alt="avatar"
+          />
+          <p className="whitespace-nowrap lg:text-xl">Gerona Reven</p>
         </div>
       </div>
     </header>
