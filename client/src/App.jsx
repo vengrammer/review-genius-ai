@@ -1,11 +1,13 @@
-import HomePage from "@/routers/HomePage"
+import Examinee from "@/routers/Examinee"
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import NotFound from "./components/examineePage/NotFound";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element={<HomePage/>} />
+        <Route path="examinee/*" element={<Examinee/>} />
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
   );

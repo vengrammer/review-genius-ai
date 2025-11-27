@@ -1,7 +1,6 @@
 import { BookOpenText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   NavigationMenu,
@@ -17,13 +16,21 @@ import {
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", active: true },
-  { href: "/history", label: "History" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { href: "/examinee/home", label: "Home" },
+  { href: "/examinee/history", label: "History"  },
+  { href: "/examinee/about", label: "About" },
+  { href: "/examinee/help", label: "Help"},
 ];
 
 function Navbar() {
+    const location = useLocation();
+  function checkActiveRoute(currentPath){
+    if(location.pathname.includes(currentPath)){
+      return true;
+    }else{
+      return false;
+    }
+  }
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -85,17 +92,15 @@ function Navbar() {
             <a href="#" className="text-primary hover:text-primary/90">
               <BookOpenText />
             </a>
-            {/* Navigation menu */}
+            {/* Navigation menu in md */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
-                    <NavigationMenuLink
-                      active={link.active}
-                      href={link.href}
-                      className="py-1.5 font-medium text-muted-foreground hover:text-primary"
-                    >
-                      {link.label}
+                    <NavigationMenuLink className="py-1.5 font-medium text-muted-foreground hover:text-primary" active={checkActiveRoute(link.label.toLowerCase())}>
+                      <Link to={link.href}  >
+                        {link.label}
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
