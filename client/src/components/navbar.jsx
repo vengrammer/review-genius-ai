@@ -32,7 +32,7 @@ function Navbar() {
     }
   }
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="bg-[#0984e3] border-[#fbc531] border-b-3 px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -76,8 +76,8 @@ function Navbar() {
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink className="py-1.5">
-                        <Link to={link.href} active={link.active}>
+                      <NavigationMenuLink className="py-1.5"  asChild active={checkActiveRoute(link.label.toLowerCase())}>
+                        <Link to={link.href}>
                           {link.label}
                         </Link>
                       </NavigationMenuLink>
@@ -89,15 +89,15 @@ function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
+            <p className="text-primary hover:text-primary/90">
               <BookOpenText />
-            </a>
+            </p>
             {/* Navigation menu in md */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
-                    <NavigationMenuLink className="py-1.5 font-medium text-muted-foreground hover:text-primary" active={checkActiveRoute(link.label.toLowerCase())}>
+                    <NavigationMenuLink className="py-1.5 font-medium hover:bg-[#C4E538]" asChild  active={checkActiveRoute(link.label.toLowerCase())}>
                       <Link to={link.href}  >
                         {link.label}
                       </Link>
