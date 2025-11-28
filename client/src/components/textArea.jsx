@@ -8,9 +8,12 @@ function TextArea() {
   const id = useId();
   return (
     <div className="*:not-first:mt-2">
-      <Label htmlFor={id} className="text-[#fed330] text-2xl italic">
-        Paste Your Learning Material{" "}
-      </Label>
+      <div className="pb-2">
+        <Label htmlFor={id} className="text-[#fed330] text-2xl italic">
+          Paste Your Learning Material{" "}
+        </Label>
+      </div>
+
       <Textarea
         id={id}
         className="min-h-150 text-[#fed330] md:text-[1rem] border-[#fed330] border-2 placeholder:text-[#fed330]"
