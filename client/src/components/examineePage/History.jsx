@@ -10,7 +10,6 @@ function History() {
           Qiuzzes History
         </Label>
       </div>
-
       <Historytable />
     </div>
   );
