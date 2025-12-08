@@ -23,31 +23,31 @@ function Home() {
   //generateQuiz(text);
 */
   return (
-    <div className="*:not-first:mt-2 p-10 min-h-screen">
+    <div className="*:not-first:mt-2 lg:p-10 min-h-screen p-3">
       <div className="mt-4 ml-10 mb-6">
         <Label htmlFor={id} className="text-[#66ff00] text-2xl italic"  >
           Enter Your Learning Material{" "}
         </Label>
       </div>
-      <div className="m-10">
+      <div className="lg:m-10">
         <Textarea
-          className="min-h-3 text-[#fed330] md:text-[1.5rem] border-[#fed330] border-2 rounded-2xl placeholder:text-[#fed330] italic"
-          placeholder="Title of Learning Material"
+          className="min-h-3 text-[#fed330] lg:text-[1.5rem] border-[#fed330] border-2 rounded-2xl placeholder:text-[#fed330] italic"
+          placeholder="Title of Learning Topic"
         />
       </div>
-      <div className="m-10">
+      <div className="lg:m-10">
         <Textarea
-        className="min-h-129 text-[#fed330] rounded-lg md:text-[1.2rem] border-[#fed330] border-2 placeholder:text-[#fed330] italic"
+        className="min-h-120 text-[#fed330] rounded-lg lg:text-[1.2rem] border-[#fed330] border-2 placeholder:text-[#fed330] italic"
           placeholder="Paste Your Learning Material"
         />
       </div>
 
       <div className="flex justify-end">
         <Button
-          className="text-[#fed330] bg-[#0652DD] hover:bg-[#226efc] cursor-pointer border-none"
+          className=" bg-[#0015fe] hover:bg-[#226efc] lg:mr-10 cursor-pointer border-none"
           variant="outline"
         >
-          GENERATE QUIZZ
+          <span className="text-[#40ff06]">GENERATE QUIZZ</span>
         </Button>
       </div>
     </div>
