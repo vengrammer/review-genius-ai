@@ -1,6 +1,6 @@
 import QuizLayout from "@/layout/QuizLayout";
 import QuiztionAndAnswer from "@/components/examineePage/QuestionAndAnswer";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"
 function Quiz() {
   return (
     <Routes>
