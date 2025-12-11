@@ -1,83 +1,132 @@
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { MessageCircleQuestionMark } from "lucide-react";
 
 function QuiztionAndAnswer() {
-  const question =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quod fugiat quos modi, tempore iste illo explicabo dicta officiis quasi esse iure veniam vel illum corporis velit error placeat.";
-
-  const answers = [
-    "A. Lorem ipsum dolor sit amet",
-    "B. Lorem ipsum dolor sit amet",
-    "C. Lorem ipsum dolor sit amet",
-    "D. Lorem ipsum dolor sit amet",
-  ];
-
-  const data = [
-    {
-      question: "1. What is the capital city of France?",
-      answers: ["A. Berlin", "B. Madrid", "C. Paris", "D. Rome"],
-    },
-    {
-      question: "2. Which planet is known as the Red Planet?",
-      answers: ["A. Earth", "B. Mars", "C. Jupiter", "D. Saturn"],
-    },
-    {
-      question: "3. What gas do plants absorb from the atmosphere?",
-      answers: ["A. Oxygen", "B. Nitrogen", "C. Carbon Dioxide", "D. Hydrogen"],
-    },
-    {
-      question: "4. What is the largest ocean on Earth?",
-      answers: [
-        "A. Atlantic Ocean",
-        "B. Pacific Ocean",
-        "C. Indian Ocean",
-        "D. Arctic Ocean",
+  const data = {
+    1: {
+      question: "What is the largest planet in our solar system?",
+      choices: [
+        ["A. Jupiter", true],
+        ["B. Earth", false],
+        ["C. Mars", false],
+        ["D. Venus", false],
       ],
     },
-    {
-      question: "5. Who wrote the play 'Romeo and Juliet'?",
-      answers: [
-        "A. Charles Dickens",
-        "B. William Shakespeare",
-        "C. Mark Twain",
-        "D. Jane Austen",
+    2: {
+      question: "What do plants primarily use for photosynthesis?",
+      choices: [
+        ["A. Oxygen", false],
+        ["B. Carbon dioxide", true],
+        ["C. Nitrogen", false],
+        ["D. Hydrogen", false],
       ],
     },
-  ];
+    3: {
+      question: "Which part of the computer is considered the brain?",
+      choices: [
+        ["A. Hard Drive", false],
+        ["B. RAM", false],
+        ["C. CPU", true],
+        ["D. GPU", false],
+      ],
+    },
+    4: {
+      question: "Which gas do humans need to breathe in to survive?",
+      choices: [
+        ["A. Carbon monoxide", false],
+        ["B. Oxygen", true],
+        ["C. Helium", false],
+        ["D. Nitrogen", false],
+      ],
+    },
+    5: {
+      question: "Which ocean is the largest on Earth?",
+      choices: [
+        ["A. Atlantic Ocean", false],
+        ["B. Indian Ocean", false],
+        ["C. Pacific Ocean", true],
+        ["D. Arctic Ocean", false],
+      ],
+    },
+    6: {
+      question: "Which ocean is the largest on Earth?",
+      choices: [
+        ["A. Atlantic Ocean", false],
+        ["B. Indian Ocean", false],
+        ["C. Pacific Ocean", true],
+        ["D. Arctic Ocean", false],
+      ],
+    },
+  };
+
+  const questionKeys = Object.keys(data);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const currentQuestion = data[questionKeys[currentIndex]];
+
+  const handleNext = () => {
+    if (currentIndex < questionKeys.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const checkCorrectAnswer = (isCorrect, index) => {
+    setSelectedIndex(index);
+    if (isCorrect) {
+      setTotalScore(totalScore + 1);
+    } 
+    setShowCorrectAnswer(true);
+  };
+
+  console.log(totalScore);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="flex flex-col w-full max-w-3xl bg-[#3498db] border border-[#1e90ff] rounded-2xl shadow-xl p-6 sm:p-8">
-        {/* Question */}
-        <div className="border bg-white border-[#f1c40f] w-full sm:p-5  rounded-xl text-center shadow-sm">
-          <span>
-            <MessageCircleQuestionMark size={50} className="m-auto " />
+        {/*question*/}
+        <div className="border bg-white border-[#f1c40f] w-full p-5 rounded-xl text-center shadow-sm">
+          <MessageCircleQuestionMark size={50} className="m-auto" />
+          <span className="text-lg font-medium text-gray-800">
+            <span>{currentIndex + 1}. </span>
+            {currentQuestion.question}
           </span>
-          <span className="text-lg font-medium text-gray-800">{question}</span>
         </div>
 
-        {/* Answers: 2 per row on desktop, 1 per row on mobile */}
-        <div className="mt-6 sm:mt-10 flex flex-col sm:flex-col gap-4">
-          {[0, 2].map((startIndex) => (
-            <div key={startIndex} className="flex flex-col sm:flex-row gap-4">
-              {answers.slice(startIndex, startIndex + 2).map((text, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="flex-1 h-20 border border-[#f1c40f] rounded-xl shadow-sm hover:bg-[#f9a640] text-left px-4 cursor-pointer"
-                >
-                  {text}
-                </Button>
-              ))}
-            </div>
+        {/* Choices */}
+        <div className="mt-6 sm:mt-10 flex flex-col gap-4">
+          {currentQuestion.choices.map(([text, isCorrect], index) => (
+            <Button
+              key={index}
+              variant="outline"
+              onClick={() => checkCorrectAnswer(isCorrect, index)}
+              className={`${
+                selectedIndex === index && !isCorrect && showCorrectAnswer
+                  ? `bg-red-600`
+                  : ``
+              } ${
+                isCorrect && showCorrectAnswer && `bg-green-300`
+              } w-full h-20 border border-[#f1c40f] rounded-xl shadow-sm hover:bg-[#f9a640] text-left px-4 cursor-pointer`}
+            >
+              <span>{text}</span>
+            </Button>
           ))}
         </div>
 
-        {/* Next Button */}
         <div className="mt-6 sm:mt-10 flex justify-center">
-          
-          <Button className="px-6 sm:px-10 py-3 sm:py-4 bg-blue-800 hover:bg-blue-900 text-white rounded-xl text-base sm:text-lg shadow-md">
-            <span>1/5</span><span>Next Question →</span>
+          <Button
+            onClick={handleNext}
+            className="px-6 sm:px-10 py-3 sm:py-4 bg-blue-800 hover:bg-blue-900 text-white rounded-xl text-base sm:text-lg shadow-md"
+          >
+            <span>
+              {currentIndex + 1} / {questionKeys.length}{" "}
+            </span>
+            {currentIndex < questionKeys.length - 1
+              ? "Next Question →"
+              : "Finish"}
           </Button>
         </div>
       </div>
