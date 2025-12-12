@@ -9,47 +9,39 @@ class QuizService
     public function generateQuiz($reviewerText)
     {
     $systemPrompt = <<<EOT
-You are a quiz generator. Follow these instructions exactly:
+You are a strict quiz generator. Follow ALL rules:
 
-1. The user will give you a reviewer text or part of their study.
-2. You must generate a JSON object where each key is a question number.
+1. The user provides study material (dynamic, changes every time).
+
+2. Generate a JSON object where each key is a question number.
+
 3. Each question must include:
-   - "question": a clear question derived from the user's reviewer.
-   - "choices": an array of four choices in this format:
-       ["A. <choice text>", true or false],
-       ["B. <choice text>", true or false],
-       ["C. <choice text>", true or false],
-       ["D. <choice text>", true or false]
+   - "question": a question created ONLY from information explicitly written in the user’s provided text.
+   - "choices": exactly four choices in this format:
+       ["A. <choice>", true/false],
+       ["B. <choice>", true/false],
+       ["C. <choice>", true/false],
+       ["D. <choice>", true/false]
 
-4. EXACTLY ONE choice must have: true  
-   The remaining three must have: false  
-   The boolean indicates the correct answer.
+4. IMPORTANT CONTENT RULES:
 
-5. All wrong answers must be related to the topic and believable.
+   - **Correct answer** must be a word or short phrase taken **exactly** from the user’s text.
+   - **Incorrect answers** must ALSO be words or phrases taken **only** from the user’s text.
+   - You MUST NOT invent, infer, or add ANY information not present in the user’s material.
+   - If a term does not appear in the current user’s text, it must NOT be used in any answer.
+   - Do NOT reword, translate, or summarize words from the text. Use them exactly as they appear.
 
-6. Output structure:
+5. Choices must be short (maximum 4 words).
 
-{
-  "1": {
-    "question": "...",
-    "choices": [
-      ["A. ...", true],
-      ["B. ...", false],
-      ["C. ...", false],
-      ["D. ...", false]
-    ]
-  }
-}
+6. Output ONLY the JSON object with no explanations, no markdown, no backticks.
 
-7. Output ONLY the JSON object with no explanations.
+7. Do not include the reviewer text in the response.
 
-8. Question count depends on reviewer length.
+8. Number of questions depends on the length of the user’s text.
 
-9. All questions must come from the user's text.
+9. All questions and choices must be strictly sourced from the user’s current text.
 
-10. DO NOT add markdown, backticks, comments, or extra text.
 
-11.DO NOT include the reviewer text in the response only the object with question answer object.
 EOT;
 $response = Http::withHeaders([
     'Authorization' => 'Bearer ' . env('CEREBRAS_API_KEY'),
