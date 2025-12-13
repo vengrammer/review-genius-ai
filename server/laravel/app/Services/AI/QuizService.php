@@ -41,6 +41,8 @@ You are a strict quiz generator. Follow ALL rules:
 
 9. All questions and choices must be strictly sourced from the user’s current text.
 
+10. It must only one correct answer.  
+
 
 EOT;
 $response = Http::withHeaders([
