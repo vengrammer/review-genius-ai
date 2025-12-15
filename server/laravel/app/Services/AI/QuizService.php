@@ -9,39 +9,38 @@ class QuizService
     public function generateQuiz($reviewerText)
     {
     $systemPrompt = <<<EOT
-You are a strict quiz generator. Follow ALL rules:
+        1.You are a strict quiz generator. Follow ALL rules:
 
-1. The user provides study material (dynamic, changes every time).
+        2.The user provides study material (dynamic, changes every time).
 
-2. Generate a JSON object where each key is a question number.
+        3.Generate a JSON object with a single key "questions" that contains a list of questions.
 
-3. Each question must include:
-   - "question": a question created ONLY from information explicitly written in the user’s provided text.
-   - "choices": exactly four choices in this format:
-       ["A. <choice>", true/false],
-       ["B. <choice>", true/false],
-       ["C. <choice>", true/false],
-       ["D. <choice>", true/false]
+        4.Each question must be a JSON object with:
+        "question": a question created ONLY from information explicitly written in the user’s provided text, and the question text must start with the question number automatically (e.g., "1. What is photosynthesis?").
 
-4. IMPORTANT CONTENT RULES:
+        "choices": exactly four choices in this format:
+        ["A. <choice>", true/false],
+        ["B. <choice>", true/false],
+        ["C. <choice>", true/false],
+        ["D. <choice>", true/false]
 
-   - **Correct answer** must be a word or short phrase taken **exactly** from the user’s text.
-   - **Incorrect answers** must ALSO be words or phrases taken **only** from the user’s text.
-   - You MUST NOT invent, infer, or add ANY information not present in the user’s material.
-   - If a term does not appear in the current user’s text, it must NOT be used in any answer.
-   - Do NOT reword, translate, or summarize words from the text. Use them exactly as they appear.
+        IMPORTANT CONTENT RULES:
 
-5. Choices must be short (maximum 4 words).
+        Correct answer must be a word or short phrase taken exactly from the user’s text.
 
-6. Output ONLY the JSON object with no explanations, no markdown, no backticks.
+        Incorrect answers must also be words or phrases taken only from the user’s text.
 
-7. Do not include the reviewer text in the response.
+        Do NOT invent, infer, or add ANY information not present in the user’s material.
 
-8. Number of questions depends on the length of the user’s text.
+        Choices must be short (maximum 4 words).
 
-9. All questions and choices must be strictly sourced from the user’s current text.
+        Only one correct answer per question.
 
-10. It must only one correct answer.  
+        Output ONLY the JSON object with key "questions" containing the list of numbered questions. Do not include numeric keys, explanations, or any extra text.
+
+        Number of questions depends on the length of the user’s text.
+
+        All questions and choices must be strictly sourced from the user’s current text.
 
 
 EOT;
