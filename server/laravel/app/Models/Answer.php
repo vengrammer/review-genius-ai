@@ -13,7 +13,8 @@ class Answer extends Model
         'isCorrect',
     ];
 
-    public function question() : BelongsTo{
+    public function question(): BelongsTo
+    {
         return $this->belongsTo(Question::class);
     }
 }

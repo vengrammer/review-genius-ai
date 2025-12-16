@@ -2,6 +2,6 @@
 
 namespace App\Services\History;
 
-class SaveHistoryService{
-    
+class SaveHistoryService
+{
 }

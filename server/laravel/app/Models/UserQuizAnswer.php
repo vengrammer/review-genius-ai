@@ -14,16 +14,20 @@ class UserQuizAnswer extends Model
         'answer_id',
     ];
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
-    public function quiz(): BelongsTo{
+    public function quiz(): BelongsTo
+    {
         return $this->belongsTo(Quiz::class);
     }
-    public function question(): BelongsTo{
+    public function question(): BelongsTo
+    {
         return $this->belongsTo(Question::class);
     }
-    public function answer(): BelongsTo{
+    public function answer(): BelongsTo
+    {
         return $this->belongsTo(Answer::class);
     }
 }

@@ -14,11 +14,13 @@ class Quiz extends Model
         "last_score",
     ];
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-     public function questions(): HasMany{
+    public function questions(): HasMany
+    {
         return $this->hasMany(Question::class);
     }
 

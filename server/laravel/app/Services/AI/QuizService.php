@@ -8,7 +8,7 @@ class QuizService
 {
     public function generateQuiz($reviewerText)
     {
-    $systemPrompt = <<<EOT
+        $systemPrompt = <<<EOT
         1.You are a strict quiz generator. Follow ALL rules:
 
         2.The user provides study material (dynamic, changes every time).
@@ -44,13 +44,13 @@ class QuizService
 
 
 EOT;
-$response = Http::withHeaders([
-    'Authorization' => 'Bearer ' . env('CEREBRAS_API_KEY'),
-    'Content-Type' => 'application/json',
-])->post(env('CEREBRAS_API_URL'), [
-    'model' => 'llama-3.3-70b',
-    'prompt' => $systemPrompt . "\n\nUser Text: " . $reviewerText,
-]);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('CEREBRAS_API_KEY'),
+            'Content-Type' => 'application/json',
+        ])->post(env('CEREBRAS_API_URL'), [
+            'model' => 'llama-3.3-70b',
+            'prompt' => $systemPrompt . "\n\nUser Text: " . $reviewerText,
+        ]);
         return $response->json();
     }
 }
