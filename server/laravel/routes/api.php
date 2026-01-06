@@ -12,3 +12,4 @@ Route::get('/hey', function () {
     return ['name' => "hello from api"];
 });
 Route::post('/ai/generatequiz', [AIChatController::class, 'generate']);
+Route::get('/history', [AIChatController::class, 'history']);

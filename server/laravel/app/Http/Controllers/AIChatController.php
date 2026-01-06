@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AI\QuizService;
+use App\Services\History\showHistory;
 use App\Models\Quiz;
-use App\Models\Question;
-use App\Models\Answer;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -15,10 +13,12 @@ use Throwable;
 class AIChatController extends Controller
 {
     protected $quizService;
+    protected $showHistoryService;
 
-    public function __construct(QuizService $quizService)
+    public function __construct(QuizService $quizService, showHistory $showHistoryService)
     {
         $this->quizService = $quizService;
+        $this->showHistoryService = $showHistoryService;
     }
 
     public function generate(Request $request)
@@ -30,7 +30,7 @@ class AIChatController extends Controller
 
         $title = $validated['title'];
         $reviewer_text = $validated['reviewer_text'];
-        $user = 1; // Keep user as integer
+        $user = 1;
 
         $aiResponse = $this->quizService->generateQuiz($reviewer_text);
 
@@ -59,7 +59,7 @@ class AIChatController extends Controller
             ], 400);
         }
 
-        // Safely get questions from AI response
+        //questions from AI response
         $questions = $quiz['questions'] ?? null;
         if (!is_array($questions) || count($questions) === 0) {
             return response()->json([
@@ -67,8 +67,10 @@ class AIChatController extends Controller
             ], 422);
         }
 
+        $quizModel = null;
+
         try {
-            DB::transaction(function () use ($title, $questions, $user) {
+            DB::transaction(function () use ($title, $questions, $user, &$quizModel) {
                 $quizModel = Quiz::create([
                     'user_id' => (int) $user,
                     'title' => $title,
@@ -94,12 +96,23 @@ class AIChatController extends Controller
                         $question->answers()->createMany($answersData);
                     }
                 }
+
             });
+
+
+            if (!$quizModel || !$quizModel->id) {
+                throw new \Exception('Quiz creation failed.');
+            }
+
+            $quizModel = Quiz::with('questions.answers')
+                ->findOrFail($quizModel->id);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Quiz generated and saved successfully',
+                'quiz' => $quizModel,
             ]);
+
         } catch (\Throwable $e) {
             Log::error('Failed to save quiz', ['error' => $e->getMessage()]);
             return response()->json([
@@ -110,4 +123,17 @@ class AIChatController extends Controller
         }
     }
 
+    public function history(Request $request){
+        $user_id =  $request['user_id'];
+        try{
+            $quizzes = $this->showHistoryService->show($user_id);
+            return response()->json([
+                'history' => $quizzes,
+            ], 200);
+        }catch(\Throwable $e){
+            return response()->json([
+                'Error' => $e,
+            ], 500);
+        }
+    }
 }

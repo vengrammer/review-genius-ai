@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import { Button } from "./ui/button";
 
 function Historytable() {
+  const server_url = import.meta.env.VITE_BACKEND_URL;
+  const user_id = 1;
+  async function showHistory(userId) {
+    const response = await axios.get(`${server_url}/api/history`,
+      {
+        userId: userId
+      })
+    console.log('History response:', response.data);
+  }
+
+  useEffect(() => {
+    showHistory(user_id);
+  }, []);
+
   const histories = [
     {
       id: 1,
