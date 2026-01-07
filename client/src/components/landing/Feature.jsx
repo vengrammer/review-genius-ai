@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Login() {
+function Feature() {
     return (
         <div>
-            hello
+            feature
         </div>
     );
 }
 
-export default Login;
+export default Feature;
