@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AIChatController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,3 +15,4 @@ Route::get('/hey', function () {
 });
 Route::post('/ai/generatequiz', [AIChatController::class, 'generate']);
 Route::get('/history', [AIChatController::class, 'history']);
+Route::post('/register',[UserController::class,'userSignup']);

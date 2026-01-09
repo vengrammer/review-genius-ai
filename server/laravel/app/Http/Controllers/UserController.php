@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class UserController extends Controller
 {
@@ -20,7 +22,7 @@ class UserController extends Controller
             'password' => Hash::make($user_data['password']),
         ]);
 
-        $token = $user->createToken('user-token')->plainTextToken;
+        $token = JWTAuth::fromUser($user);
         return response()->json([
             'message' => 'User registered successfully',
             'token' => $token,
