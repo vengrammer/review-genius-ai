@@ -5,10 +5,9 @@ import { useState } from "react";
 function LoginSignup() {
   const mylocation = useLocation();
   const [amIInLoginRoute, setAmIInLoginRoute] = useState(false);
-
   useEffect(() => {
     setAmIInLoginRoute(mylocation.pathname.includes("login"));
-  }, [[mylocation.pathname]]);
+  }, [mylocation.pathname]);
 
   return (
     <div className="flex items-center justify-center h-screen">

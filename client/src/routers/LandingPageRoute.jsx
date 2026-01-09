@@ -8,12 +8,12 @@ function LandingPageRoute() {
     <Routes>
       <Route element={<LandingPage />}>
         <Route index element={<Navigate to="feature" replace />} />
-        <Route path="feature" element={<Feature />} />
+        <Route path="home" element={<Feature />} />
         <Route path="login" element={<LoginSignup />} />
         <Route path="signup" element={<LoginSignup />} />
         <Route
             path="*"
-            element={<Navigate to="/feature" replace />}
+            element={<Navigate to="/home" replace />}
           />
       </Route>
     </Routes>
