@@ -17,15 +17,15 @@ import {
 const navigationLinks = [
   { href: "/feature", label: "Home" },
   { href: "/login", label: "Sign in" },
-  { href: "/signup", label: "Sign up"  },
+  { href: "/signup", label: "Sign up" },
 ];
 
 function Navbarlandingpage() {
-    const location = useLocation();
-  function checkActiveRoute(currentPath){
-    if(location.pathname.includes(currentPath)){
+  const location = useLocation();
+  function checkActiveRoute(currentPath) {
+    if (location.pathname.includes(currentPath)) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -74,10 +74,12 @@ function Navbarlandingpage() {
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink className="py-1.5"  asChild active={checkActiveRoute(link.label.toLowerCase())}>
-                        <Link to={link.href}>
-                          {link.label}
-                        </Link>
+                      <NavigationMenuLink
+                        className="py-1.5"
+                        asChild
+                        active={checkActiveRoute(link.label.toLowerCase())}
+                      >
+                        <Link to={link.href}>{link.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -87,20 +89,22 @@ function Navbarlandingpage() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-          <div class="pr-10 text-3xl font-bold tracking-wide">
-            Review<span class="text-indigo-600">Genius</span>
-            <span class="text-sm align-top text-gray-500 ml-1">AI</span>
-          </div>
+            <div className="pr-10 text-3xl font-bold tracking-wide">
+              Review<span className="text-indigo-600">Genius</span>
+              <span className="text-sm align-top text-gray-500 ml-1">AI</span>
+            </div>
 
             {/* Navigation menu in md */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-10">
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
-                    <NavigationMenuLink className="py-1.5 font-medium hover:bg-[#e2ebd4]" asChild  active={checkActiveRoute(link.label.toLowerCase())}>
-                      <Link to={link.href}  >
-                        {link.label}
-                      </Link>
+                    <NavigationMenuLink
+                      className="py-1.5 font-medium hover:bg-[#e2ebd4]"
+                      asChild
+                      active={checkActiveRoute(link.label.toLowerCase())}
+                    >
+                      <Link to={link.href}>{link.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}

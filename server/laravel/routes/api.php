@@ -15,4 +15,4 @@ Route::get('/hey', function () {
 });
 Route::post('/ai/generatequiz', [AIChatController::class, 'generate']);
 Route::get('/history', [AIChatController::class, 'history']);
-Route::post('/register',[UserController::class,'userSignup']);
+Route::post('auth/register',[UserController::class,'userSignup']);
