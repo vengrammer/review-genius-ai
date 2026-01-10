@@ -16,3 +16,5 @@ Route::get('/hey', function () {
 Route::post('/ai/generatequiz', [AIChatController::class, 'generate']);
 Route::get('/history', [AIChatController::class, 'history']);
 Route::post('auth/register',[UserController::class,'userSignup']);
+Route::post('auth/login',[UserController::class,'userLogin']);
+Route::post('auth/logut',[UserController::class,'userLogout']);

@@ -28,4 +28,31 @@ class UserController extends Controller
             'user' => $user,
         ],201);
     }
+
+    public function userLogin(Request $request){
+        $user_data = $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:8'
+        ]);
+
+        $user = User::where('username', $user_data['username'])->first();
+
+        if(!$user || !Hash::check($user_data['password'], $user->password)){
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+        $token = JWTAuth::fromUser($user);
+        return response()->json([
+            'message' => 'User logged in successfully',
+            'token' => $token,
+            'user' => $user,
+        ]);
+    }
+
+     public function userLogout(Request $request){
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
 }

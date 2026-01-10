@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { EyeClosed } from "lucide-react";
@@ -8,30 +7,47 @@ import axios from "axios";
 function LoginSignup() {
   const mylocation = useLocation();
   const server_url = import.meta.env.VITE_BACKEND_URL;
-  const [amIInLoginRoute, setAmIInLoginRoute] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    setAmIInLoginRoute(mylocation.pathname.includes("login"));
-  }, [mylocation.pathname]);
+  const amIInLoginRoute = mylocation.pathname.includes("login");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
     if (amIInLoginRoute) {
-      console.log("logic");
-    } else {
+      //login logic
       try {
-        const response = axios.post(`${server_url}/api/auth/register`, {
+        const response = await axios.post(`${server_url}/api/auth/login`, {
+          username: username,
+          password: password,
+        });
+
+        console.log("login  response:", response.data);
+      } catch (error) {
+        console.log(
+          "Error during login:",
+          error.response?.data || error.message
+        );
+      }
+    } else {
+      //register logic
+      try {
+        const response = await axios.post(`${server_url}/api/auth/register`, {
           fullname: fullname,
           username: username,
           password: password,
         });
-        console.log("Signup response:", response.data.message);
+
+        console.log("Signup response:", response.data);
       } catch (error) {
-        console.log("Error during signup:", error);
+        console.log(
+          "Error during signup:",
+          error.response?.data || error.message
+        );
       }
     }
   }
@@ -66,7 +82,9 @@ function LoginSignup() {
               </div>
             )}
             <div>
-              <label className="text-sm font-medium text-gray-600">Username</label>
+              <label className="text-sm font-medium text-gray-600">
+                Username
+              </label>
               <input
                 type="text"
                 placeholder="Enter your username"
@@ -77,7 +95,9 @@ function LoginSignup() {
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-600">Password</label>
+              <label className="text-sm font-medium text-gray-600">
+                Password
+              </label>
               <div className="relative mt-1 ">
                 <input
                   type={showPassword ? "text" : "password"}
