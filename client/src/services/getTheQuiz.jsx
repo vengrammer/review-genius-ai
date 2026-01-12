@@ -1,4 +1,3 @@
-// src/services/getTheQuiz.js
 import axios from "axios";
 
 async function getTheQuiz(text) {
