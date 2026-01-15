@@ -1,5 +1,5 @@
 import { Loader } from "lucide-react";
-import { React, createContext, useEffect, useState } from "react";
+import { React, createContext, useEffect, useState, useContext } from "react";
 
 const AuthContext = createContext(null);
 const TOKEN_KEY = "user_token";
@@ -69,4 +69,11 @@ function AuthProvider({ children }) {
   );
 }
 
-export default AuthProvider;
+const  useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within an AuthProvider");
+  return ctx;
+};
+
+export { AuthProvider, useAuth };
+

@@ -4,8 +4,13 @@ import HomeLayout from "@/layout/HomeLayout";
 import History from "@/components/examineePage/History";
 import About from "@/components/examineePage/About";
 import Help from "@/components/examineePage/Help";
+import { useAuth } from "@/hooks/AuthProvider";
 
 function Examinee() {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <Routes>
       <Route element={<HomeLayout />}>
